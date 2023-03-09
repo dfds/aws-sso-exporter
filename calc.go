@@ -2,7 +2,6 @@ package awsssoexporter
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/aws/aws-sdk-go-v2/service/cloudtrail/types"
 	"go.dfds.cloud/aws-sso-exporter/aws"
 	"sort"
@@ -43,13 +42,13 @@ func CalcFederateStats(events []types.Event) StatsFederate {
 		stats.TotalRolesAssumed = stats.TotalRolesAssumed + 1
 		stats.RoleAssumedCountByUser[*event.Username] = stats.RoleAssumedCountByUser[*event.Username] + 1
 
-		fmt.Printf("%s, %s, %s\n", *event.EventName, *event.Username, *event.EventTime)
+		//fmt.Printf("%s, %s, %s\n", *event.EventName, *event.Username, *event.EventTime)
 		var innerEvent aws.FederateEvent
 		err := json.Unmarshal([]byte(*event.CloudTrailEvent), &innerEvent)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("  %s - %s accessing %s in %s\n", innerEvent.AwsRegion, innerEvent.UserIdentity.UserName, innerEvent.ServiceEventDetails.RoleName, innerEvent.ServiceEventDetails.AccountID)
+		//fmt.Printf("  %s - %s accessing %s in %s\n", innerEvent.AwsRegion, innerEvent.UserIdentity.UserName, innerEvent.ServiceEventDetails.RoleName, innerEvent.ServiceEventDetails.AccountID)
 	}
 
 	stats.UniqueUsers = len(stats.RoleAssumedCountByUser)
@@ -80,13 +79,13 @@ func CalcAuthenticateStats(events []types.Event) StatsAuthenticate {
 		stats.TotalSignins = stats.TotalSignins + 1
 		stats.SignInCountByUser[*event.Username] = stats.SignInCountByUser[*event.Username] + 1
 
-		fmt.Printf("%s, %s, %s\n", *event.EventName, *event.Username, *event.EventTime)
+		//fmt.Printf("%s, %s, %s\n", *event.EventName, *event.Username, *event.EventTime)
 		var innerEvent aws.AuthenticateEvent
 		err := json.Unmarshal([]byte(*event.CloudTrailEvent), &innerEvent)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("  %s - %s\n", innerEvent.AwsRegion, innerEvent.UserIdentity.UserName)
+		//fmt.Printf("  %s - %s\n", innerEvent.AwsRegion, innerEvent.UserIdentity.UserName)
 	}
 
 	stats.UniqueUsers = len(stats.SignInCountByUser)
