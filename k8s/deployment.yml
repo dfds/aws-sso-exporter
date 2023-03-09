@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: aws-sso-exporter
+  name: aws-sso-exporter
+  namespace: $(kubernetes-namespace)
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aws-sso-exporter
+  template:
+    metadata:
+      labels:
+        app: aws-sso-exporter
+    spec:
+      serviceAccountName: aws-sso-exporter
+      containers:
+      - image: dfdsdk/aws-sso-exporter:latest
+        name: aws-sso-exporter
+        imagePullPolicy: Always
+        env:
+        - name: ASE_WORKERINTERVAL
+          value: "600"
+        - name: ASE_AWS_REGION_
+          value: "eu-west-1"

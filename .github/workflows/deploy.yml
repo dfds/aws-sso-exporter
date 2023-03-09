@@ -35,6 +35,7 @@ jobs:
           files: '["k8s/*.yml"]'
         env:
           kubernetes-namespace: 'monitoring'
+          aws-account-id: ${{secrets.EXECUTION_ROLE_ACCOUNT_ID}}
       - run: 'echo "$KUBECONFIG" > /tmp/kubeconfig'
         shell: bash
         env:
