@@ -1,4 +1,4 @@
-package awsssoexporter
+package metrics
 
 import (
 	"encoding/json"

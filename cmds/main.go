@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/cloudtrail"
-	awsssoexporter "go.dfds.cloud/aws-sso-exporter"
 	"go.dfds.cloud/aws-sso-exporter/aws"
 	aConf "go.dfds.cloud/aws-sso-exporter/conf"
+	awsssoexporter "go.dfds.cloud/aws-sso-exporter/metrics"
 	"time"
 )
 

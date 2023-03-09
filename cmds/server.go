@@ -9,10 +9,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/pprof"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	awsssoexporter "go.dfds.cloud/aws-sso-exporter"
 	"go.dfds.cloud/aws-sso-exporter/aws"
 	"go.dfds.cloud/aws-sso-exporter/conf"
 	"go.dfds.cloud/aws-sso-exporter/internal"
+	"go.dfds.cloud/aws-sso-exporter/metrics"
 	"time"
 )
 
@@ -68,8 +68,8 @@ func worker() {
 		fmt.Printf("Request duration: %f\n", requestFinishedTime.Sub(requestStartTime).Seconds())
 		fmt.Printf("Events retrieved: %d\n", len(respAuth))
 
-		federateStats := awsssoexporter.CalcFederateStats(respFed)
-		authenticateStats := awsssoexporter.CalcAuthenticateStats(respAuth)
+		federateStats := metrics.CalcFederateStats(respFed)
+		authenticateStats := metrics.CalcAuthenticateStats(respAuth)
 
 		// Federate
 		internal.FederateTotalUniqueUsersGauge.Set(float64(federateStats.UniqueUsers))
