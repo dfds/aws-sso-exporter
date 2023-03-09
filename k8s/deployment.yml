@@ -23,5 +23,5 @@ spec:
         env:
         - name: ASE_WORKERINTERVAL
           value: "600"
-        - name: ASE_AWS_REGION_
+        - name: ASE_AWS_REGION
           value: "eu-west-1"
