@@ -41,6 +41,7 @@ func worker() {
 	}
 
 	for {
+		fmt.Println("Getting AWS SSO usage data")
 		cfg, err := awsConfig.LoadDefaultConfig(context.TODO(), awsConfig.WithRegion(config.Aws.Region), awsConfig.WithHTTPClient(aws.CreateHttpClientWithoutKeepAlive()))
 		if err != nil {
 			panic(err)
@@ -84,6 +85,6 @@ func worker() {
 		internal.AuthenticateMeanUserSignInsAssumedGauge.Set(authenticateStats.MeanUserSignIn)
 
 		fmt.Println("New SSO metrics published")
-		time.Sleep(time.Second * sleepInterval)
+		time.Sleep(sleepInterval)
 	}
 }
