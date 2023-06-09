@@ -17,6 +17,14 @@ type StatsFederate struct {
 	RoleAssumedCountryUniqueUsers map[string]map[string]int
 }
 
+type StatsConsoleLogins struct {
+	TotalLogins         int
+	UniqueUsers         int
+	AverageUserLogins   int
+	MeanUserRoleAssumed float64
+	LoginsByUser        map[string]int
+}
+
 type StatsAuthenticate struct {
 	TotalSignins             int
 	UniqueUsers              int
@@ -56,6 +64,41 @@ func CalcFederateStats(events []types.Event) StatsFederate {
 
 	data := []float64{}
 	for _, entry := range stats.RoleAssumedCountByUser {
+		data = append(data, float64(entry))
+	}
+
+	stats.MeanUserRoleAssumed = calcMedian(data)
+
+	return stats
+}
+
+func CalcConsoleLoginStats(events []types.Event) StatsConsoleLogins {
+	stats := StatsConsoleLogins{
+		TotalLogins:         0,
+		UniqueUsers:         0,
+		AverageUserLogins:   0,
+		MeanUserRoleAssumed: 0,
+		LoginsByUser:        map[string]int{},
+	}
+
+	for _, event := range events {
+		stats.TotalLogins = stats.TotalLogins + 1
+		stats.LoginsByUser[*event.Username] = stats.LoginsByUser[*event.Username] + 1
+
+		//fmt.Printf("%s, %s, %s\n", *event.EventName, *event.Username, *event.EventTime)
+		var innerEvent aws.ConsoleLoginEvent
+		err := json.Unmarshal([]byte(*event.CloudTrailEvent), &innerEvent)
+		if err != nil {
+			panic(err)
+		}
+		//fmt.Printf("  %s - %s accessing %s in %s\n", innerEvent.AwsRegion, innerEvent.UserIdentity.UserName, innerEvent.ServiceEventDetails.RoleName, innerEvent.ServiceEventDetails.AccountID)
+	}
+
+	stats.UniqueUsers = len(stats.LoginsByUser)
+	stats.AverageUserLogins = stats.TotalLogins / stats.UniqueUsers
+
+	data := []float64{}
+	for _, entry := range stats.LoginsByUser {
 		data = append(data, float64(entry))
 	}
 

@@ -25,7 +25,7 @@ func main() {
 	cloudTrailClient := cloudtrail.NewFromConfig(cfg)
 
 	requestStartTime := time.Now()
-	respFed, err := aws.GetSsoFederateEvent(cloudTrailClient)
+	respFed, err := aws.GetSsoEvents(cloudTrailClient, "ConsoleLogin")
 	if err != nil {
 		panic(err)
 	}
@@ -34,28 +34,15 @@ func main() {
 	fmt.Printf("Request duration: %f\n", requestFinishedTime.Sub(requestStartTime).Seconds())
 	fmt.Printf("Events retrieved: %d\n", len(respFed))
 
-	requestStartTime = time.Now()
-	respAuth, err := aws.GetSsoAuthenticateEvent(cloudTrailClient)
-	if err != nil {
-		panic(err)
-	}
-	requestFinishedTime = time.Now()
-
-	fmt.Printf("Request duration: %f\n", requestFinishedTime.Sub(requestStartTime).Seconds())
-	fmt.Printf("Events retrieved: %d\n", len(respFed))
-
-	federateStats := awsssoexporter.CalcFederateStats(respFed)
-	authenticateStats := awsssoexporter.CalcAuthenticateStats(respAuth)
-
-	fmt.Println("Federate")
+	federateStats := awsssoexporter.CalcConsoleLoginStats(respFed)
+	fmt.Println("Console logins")
 	fmt.Println("  Unique users: ", federateStats.UniqueUsers)
-	fmt.Println("  Total roles assumed: ", federateStats.TotalRolesAssumed)
-	fmt.Println("  Average roles assumed: ", federateStats.AverageUserRoleAssumed)
-	fmt.Println("  Mean roles assumed: ", federateStats.MeanUserRoleAssumed)
+	fmt.Println("  Total logins: ", federateStats.TotalLogins)
+	fmt.Println("  Average user logins: ", federateStats.AverageUserLogins)
 
-	fmt.Println("Authenticate")
-	fmt.Println("  Unique users: ", authenticateStats.UniqueUsers)
-	fmt.Println("  Total sign-ins: ", authenticateStats.TotalSignins)
-	fmt.Println("  Average user sign in: ", authenticateStats.AverageUserSignIn)
-	fmt.Println("  Mean user sign in: ", authenticateStats.MeanUserSignIn)
+	fmt.Println("Users:")
+	for k, v := range federateStats.LoginsByUser {
+		fmt.Printf("  %s: %d\n", k, v)
+	}
+
 }
