@@ -10,7 +10,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.42.0
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/prometheus/client_golang v1.14.0
-	go.uber.org/ratelimit v0.2.0
+	go.uber.org/ratelimit v0.3.0
 )
 
 require (
@@ -26,6 +26,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.14.12 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.19.2 // indirect
 	github.com/aws/smithy-go v1.13.5 // indirect
+	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
