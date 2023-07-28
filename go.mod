@@ -3,7 +3,7 @@ module go.dfds.cloud/aws-sso-exporter
 go 1.20
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.19.0
+	github.com/aws/aws-sdk-go-v2 v1.19.1
 	github.com/aws/aws-sdk-go-v2/config v1.18.29
 	github.com/aws/aws-sdk-go-v2/service/cloudtrail v1.27.2
 	github.com/gofiber/adaptor/v2 v2.2.1
