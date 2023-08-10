@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/aws/aws-sdk-go-v2 v1.20.1
 	github.com/aws/aws-sdk-go-v2/config v1.18.33
-	github.com/aws/aws-sdk-go-v2/service/cloudtrail v1.28.2
+	github.com/aws/aws-sdk-go-v2/service/cloudtrail v1.28.3
 	github.com/gofiber/adaptor/v2 v2.2.1
 	github.com/gofiber/fiber/v2 v2.48.0
 	github.com/kelseyhightower/envconfig v1.4.0
