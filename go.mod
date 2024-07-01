@@ -7,7 +7,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.18.43
 	github.com/aws/aws-sdk-go-v2/service/cloudtrail v1.29.0
 	github.com/gofiber/adaptor/v2 v2.2.1
-	github.com/gofiber/fiber/v2 v2.52.1
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/prometheus/client_golang v1.17.0
 	go.uber.org/ratelimit v0.3.0
