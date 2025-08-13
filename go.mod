@@ -10,7 +10,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.52.9
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/prometheus/client_golang v1.17.0
-	go.uber.org/ratelimit v0.3.0
+	go.uber.org/ratelimit v0.3.1
 )
 
 require (
