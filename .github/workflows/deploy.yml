@@ -40,7 +40,7 @@ jobs:
         shell: bash
         env:
           KUBECONFIG: ${{secrets.KUBECONFIG}}
-      - uses: azure/setup-kubectl@v3
+      - uses: azure/setup-kubectl@v4
 #        with:
 #          version: '0.0.0' # default is latest stable
         id: install
