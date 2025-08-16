@@ -59,6 +59,9 @@ type FederateEvent struct {
 		PrincipalID string `json:"principalId"`
 		AccountID   string `json:"accountId"`
 		UserName    string `json:"userName"`
+		OnBehalfOf  struct {
+			UserId string `json:"userId"`
+		} `json:"onBehalfOf"`
 	} `json:"userIdentity"`
 	EventTime           time.Time   `json:"eventTime"`
 	EventSource         string      `json:"eventSource"`
@@ -88,6 +91,9 @@ type AuthenticateEvent struct {
 		PrincipalID string `json:"principalId"`
 		AccountID   string `json:"accountId"`
 		UserName    string `json:"userName"`
+		OnBehalfOf  struct {
+			UserId string `json:"userId"`
+		} `json:"onBehalfOf"`
 	} `json:"userIdentity"`
 	EventTime          time.Time   `json:"eventTime"`
 	EventSource        string      `json:"eventSource"`

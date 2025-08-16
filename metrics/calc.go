@@ -2,9 +2,10 @@ package metrics
 
 import (
 	"encoding/json"
+	"sort"
+
 	"github.com/aws/aws-sdk-go-v2/service/cloudtrail/types"
 	"go.dfds.cloud/aws-sso-exporter/aws"
-	"sort"
 )
 
 type StatsFederate struct {
@@ -40,7 +41,6 @@ func CalcFederateStats(events []types.Event) StatsFederate {
 
 	for _, event := range events {
 		stats.TotalRolesAssumed = stats.TotalRolesAssumed + 1
-		stats.RoleAssumedCountByUser[*event.Username] = stats.RoleAssumedCountByUser[*event.Username] + 1
 
 		//fmt.Printf("%s, %s, %s\n", *event.EventName, *event.Username, *event.EventTime)
 		var innerEvent aws.FederateEvent
@@ -48,6 +48,8 @@ func CalcFederateStats(events []types.Event) StatsFederate {
 		if err != nil {
 			panic(err)
 		}
+		stats.RoleAssumedCountByUser[innerEvent.UserIdentity.OnBehalfOf.UserId] = stats.RoleAssumedCountByUser[innerEvent.UserIdentity.OnBehalfOf.UserId] + 1
+
 		//fmt.Printf("  %s - %s accessing %s in %s\n", innerEvent.AwsRegion, innerEvent.UserIdentity.UserName, innerEvent.ServiceEventDetails.RoleName, innerEvent.ServiceEventDetails.AccountID)
 	}
 
@@ -77,7 +79,6 @@ func CalcAuthenticateStats(events []types.Event) StatsAuthenticate {
 
 	for _, event := range events {
 		stats.TotalSignins = stats.TotalSignins + 1
-		stats.SignInCountByUser[*event.Username] = stats.SignInCountByUser[*event.Username] + 1
 
 		//fmt.Printf("%s, %s, %s\n", *event.EventName, *event.Username, *event.EventTime)
 		var innerEvent aws.AuthenticateEvent
@@ -85,6 +86,8 @@ func CalcAuthenticateStats(events []types.Event) StatsAuthenticate {
 		if err != nil {
 			panic(err)
 		}
+		stats.SignInCountByUser[innerEvent.UserIdentity.OnBehalfOf.UserId] = stats.SignInCountByUser[innerEvent.UserIdentity.OnBehalfOf.UserId] + 1
+
 		//fmt.Printf("  %s - %s\n", innerEvent.AwsRegion, innerEvent.UserIdentity.UserName)
 	}
 
