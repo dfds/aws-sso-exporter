@@ -1,4 +1,4 @@
-FROM golang:1.24-alpine AS build
+FROM golang:1.25-alpine AS build
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY metrics /app/metrics
 
 RUN go build -o /app/app /app/cmds/server.go
 
-FROM golang:1.24-alpine
+FROM golang:1.25-alpine
 
 COPY --from=build /app/app /app/app
 
