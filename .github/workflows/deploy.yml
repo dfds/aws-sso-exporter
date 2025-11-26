@@ -26,7 +26,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Replace tokens in k8s manifests
         uses: cschleiden/replace-tokens@v1.3
         with:
