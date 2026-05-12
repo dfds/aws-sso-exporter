@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Replace tokens in k8s manifests
-        uses: cschleiden/replace-tokens@v1.3
+        uses: cschleiden/replace-tokens@v1.4
         with:
           tokenPrefix: '$('
           tokenSuffix: ')'
