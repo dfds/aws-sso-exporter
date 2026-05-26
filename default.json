@@ -5,7 +5,7 @@
   ],
   "packageRules": [
         {
-          "matchCategories": ["python"],
+          "matchCategories": ["go"],
           "enabled": false
         }
     ]
